@@ -26,6 +26,7 @@ TARGET_SCREEN_WIDTH := 1440
 $(call soong_config_set,surfaceflinger,frame_rate_category_high,120)
 $(call soong_config_set,surfaceflinger,frame_rate_category_min,1)
 $(call soong_config_set,surfaceflinger,arr_use_oplus_ltpo_rates,true)
+$(call soong_config_set,qtidisplay,bitclk_rate_permissive,true)
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/display/displayconfig.xml:$(TARGET_COPY_OUT_VENDOR)/etc/displayconfig/display_id_4630946756802996883.xml
