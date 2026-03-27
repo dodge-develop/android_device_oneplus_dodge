@@ -1635,4 +1635,8 @@ odm/etc/wifi/peach/bdwlang.elf
 odm/etc/wifi/peach/regdb.bin
 odm/etc/wifi/peach/regdb_version
 
+# Camera
+vendor/lib64/libutils.so:vendor/lib64/libutils-stock.so;FIX_SONAME
+vendor/lib64/libui.so:vendor/lib64/libui-stock.so;FIX_SONAME
+
 # vi:ft=conf

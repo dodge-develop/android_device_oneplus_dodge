@@ -88,3 +88,6 @@ $(call inherit-product, device/oneplus/sm8750-common/common.mk)
 
 # Inherit from the proprietary files makefile.
 $(call inherit-product, vendor/oneplus/dodge/dodge-vendor.mk)
+
+# Camera
+$(call inherit-product-if-exists, vendor/oplus/camera/opluscamera.mk)
