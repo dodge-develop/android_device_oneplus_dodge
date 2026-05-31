@@ -52,9 +52,21 @@ blob_fixups: blob_fixups_user_type = {
         'vendor/lib64/hw/com.qti.chi.override.so',
         'vendor/lib64/libcamximageformatutils.so',
         'vendor/lib64/libchifeature2.so',
-        'vendor/lib64/vendor.qti.hardware.camera.offlinecamera-service-impl.so',
     ): blob_fixup()
         .replace_needed('android.hardware.graphics.allocator-V1-ndk.so', 'android.hardware.graphics.allocator-V2-ndk.so'),
+    'vendor/lib64/vendor.qti.hardware.camera.offlinecamera-service-impl.so': blob_fixup()
+        .replace_needed('android.hardware.graphics.allocator-V1-ndk.so', 'android.hardware.graphics.allocator-V2-ndk.so')
+        # convertAndImportBuffer reads the offline-metadata buffer size from the SnapHandle's
+        # aligned_width_in_bytes field (handle+0x1c), but on this build that field holds a bogus
+        # stride (e.g. 512) for the metadata BLOB while the real byte size is in the next field
+        # (aligned_width_in_pixels, handle+0x20). That truncates the metadata copy to 512 bytes
+        # and crashes CamX (MetaBuffer::AllocateBuffer). Patch the load to read +0x20 instead of
+        # +0x1c:  ldr w27,[x21,#0x1c] (bb1e40b9) -> ldr w27,[x21,#0x20] (bb2240b9).
+        # 12-byte anchor = ldr x21,[x12,#0x30]; ldr w27,[x21,#0x1c]; ldr w0,[x21,#0xc].
+        .binary_regex_replace(
+            b'\x95\x19\x40\xf9\xbb\x1e\x40\xb9\xa0\x0e\x40\xb9',
+            b'\x95\x19\x40\xf9\xbb\x22\x40\xb9\xa0\x0e\x40\xb9',
+        ),
     (
         'vendor/lib64/libcamxcoreutils.so',
         'vendor/lib64/libcamxods.so',
