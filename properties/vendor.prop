@@ -3,3 +3,7 @@ bluetooth.device.default_name=OnePlus 13
 
 # USB
 vendor.usb.product_string=OnePlus 13
+
+# Camera
+ro.vendor.oplus.market.enname=OnePlus 13
+ro.vendor.oplus.market.name=OnePlus 13
