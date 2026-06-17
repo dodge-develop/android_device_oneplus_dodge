@@ -1640,4 +1640,16 @@ odm/etc/wifi/peach/regdb_version
 vendor/lib64/libutils.so:vendor/lib64/libutils-stock.so;FIX_SONAME
 vendor/lib64/libui.so:vendor/lib64/libui-stock.so;FIX_SONAME
 
+# Dolby Vision Configs & Libs
+odm/lib64/vendor.dolby.dvs-V1-ndk.so
+odm/etc/dolby/display/dolby_vision.cfg
+odm/etc/dolby/dolby_vision.cfg
+odm/etc/media_codecs_dolby_vision.xml
+my_product/etc/dolby_vision.cfg:product/etc/dolby_vision.cfg
+my_product/lib64/libdolbyeffect_4.1.so:product/lib64/libdolbyeffect_4.1.so
+my_product/lib64/liboplusdolbyeffect_4.1.so:product/lib64/liboplusdolbyeffect_4.1.so
+system/etc/dolby_vision.cfg
+vendor/etc/dolby_vision.cfg
+vendor/persist/display/dolby_vision.cfg
+
 # vi:ft=conf
