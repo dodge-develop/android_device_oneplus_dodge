@@ -45,6 +45,17 @@ blob_fixups: blob_fixups_user_type = {
         .clear_symbol_version('AHardwareBuffer_lockPlanes')
         .clear_symbol_version('AHardwareBuffer_release')
         .clear_symbol_version('AHardwareBuffer_unlock'),
+    # Master/Pro-mode photos come out with RED/BLUE swapped. Pro mode captures RAW10 and the
+    # OnePlus OCCE tone-mapper (libBasicTonePhoto.so) runs an OpenGL shader whose body contains a
+    # U/V (Cb/Cr) reorder `dstYuv = vec4(dstYuv.r, dstYuv.b, dstYuv.g, 1.0)`. On this port the net
+    # result is a single uncompensated chroma swap -> R/B swapped JPEG. Undo the swap in the
+    # embedded GLSL (length-preserving). Normal/Photo mode does NOT use BasicTone, so this only
+    # affects the (otherwise crisp) Master/Pro path..
+    'odm/lib64/libBasicTonePhoto.so': blob_fixup()
+        .binary_regex_replace(
+            b'vec4\\(dstYuv\\.r, dstYuv\\.b, dstYuv\\.g, 1\\.0\\)',
+            b'vec4(dstYuv.r, dstYuv.g, dstYuv.b, 1.0)',
+        ),
     'odm/lib64/libsensorbridge.so': blob_fixup()
         .replace_needed('android.hardware.sensors-V2-ndk.so', 'android.hardware.sensors-V3-ndk.so'),
     (
