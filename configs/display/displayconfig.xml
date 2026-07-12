@@ -163,11 +163,15 @@
         <sdrHdrRatioMap>
             <point>
                 <first>2</first>
-                <second>3.5</second>
+                <second>6.0</second>
+            </point>
+            <point>
+                <first>25</first>
+                <second>5.0</second>
             </point>
             <point>
                 <first>50</first>
-                <second>3.5</second>
+                <second>4.0</second>
             </point>
             <point>
                 <first>100</first>
