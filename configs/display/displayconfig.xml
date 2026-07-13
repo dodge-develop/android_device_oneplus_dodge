@@ -147,6 +147,16 @@
         <timeMaxSecs>300</timeMaxSecs>         // Maximum time of HBM allowed in that window.
         <timeMinSecs>60</timeMinSecs>          // Minimum time remaining required to switch
         </timing>                              //   HBM on for.
+        <sdrHdrRatioMap>
+            <point>
+                <sdrNits>2.000</sdrNits>
+                <hdrRatio>8.000</hdrRatio>
+            </point>
+            <point>
+                <sdrNits>500.000</sdrNits>
+                <hdrRatio>1.5</hdrRatio>
+            </point>
+        </sdrHdrRatioMap>
     </highBrightnessMode>
 
     <screenBrightnessRampFastDecrease>0.5</screenBrightnessRampFastDecrease>
