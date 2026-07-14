@@ -32,3 +32,11 @@ TARGET_RECOVERY_UI_MARGIN_HEIGHT := 103
 include vendor/oneplus/dodge/BoardConfigVendor.mk
 
 BUILD_BROKEN_VENDOR_PROPERTY_NAMESPACE := true
+
+# Fusion light sensor
+TARGET_USES_OPLUS_FUSIONLIGHT := true
+
+# SEPolicy
+BOARD_VENDOR_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
+BOARD_VENDOR_SEPOLICY_DIRS += vendor/oplus/fusionlight/sepolicy/vendor
+BOARD_SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/private
