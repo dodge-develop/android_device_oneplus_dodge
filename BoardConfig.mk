@@ -35,8 +35,8 @@ BUILD_BROKEN_VENDOR_PROPERTY_NAMESPACE := true
 
 # Fusion light sensor
 TARGET_USES_OPLUS_FUSIONLIGHT := true
-# Known-good bring-up: high_pwm feed + fusion consumer. Lux/bri work; CWB R/G/B
-# still 0 (client threadLoop neutered for boot safety).
+# Feed props ON. Keep persist.alpha.fusion_light seeded 0 — enable with
+# setprop after boot (never seed 1 until cold-boot proven).
 TARGET_FUSIONLIGHT_ENABLE := true
 
 
