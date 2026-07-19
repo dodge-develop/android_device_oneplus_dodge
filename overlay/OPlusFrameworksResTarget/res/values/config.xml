@@ -258,36 +258,29 @@
          lux * (1.0f + CONSTRAINT_VALUE). When the current lux is higher than this threshold,
          the screen brightness is recalculated. See the config_ambientThresholdLevels
          description for how the constraint value is chosen. -->
-    <!-- The previous (akita) values needed the lux to rise 5-6x in dim rooms and
-         ~2x at 10-30 lux before brightness even recalculated - the main reason
-         auto brightness would not ramp up like stock. Keep enough deadband at
-         night to stay stable against the ALS picking up the screen's own glow,
-         then react to ~10-15% changes like OOS does. -->
-    <!-- Interim retune while the raw under-display ALS is the light source: the
-         panel's own glow leaks into the reading (light theme reads 1.3-2x higher
-         than dark at the same ambient), so require ~2x below 700 lux where the
-         glow is significant. Real transitions (lights on, walking outside) are
-         5-100x jumps and pass any percentage threshold instantly, so the
-         sunlight ramp is unaffected. Supersede with the fusion sensor port. -->
+    <!-- Fusion Next Gen is the light source now (content-immune). Drop the
+         interim ~2x glow-mask hysteresis that made ABC ignore normal ambient
+         changes after the first sample. Restore the stock-like curve: modest
+         deadband in near-dark, ~10-15% above ~60 lux. -->
     <integer-array name="config_ambientBrighteningThresholds">
-        <item>2500</item>
         <item>2000</item>
-        <item>1600</item>
-        <item>1400</item>
+        <item>1500</item>
         <item>1200</item>
-        <item>1200</item>
-        <item>1100</item>
-        <item>1100</item>
-        <item>1000</item>
-        <item>1000</item>
-        <item>1000</item>
-        <item>1000</item>
         <item>1000</item>
         <item>800</item>
-        <item>500</item>
+        <item>600</item>
+        <item>400</item>
         <item>300</item>
+        <item>250</item>
         <item>200</item>
         <item>150</item>
+        <item>120</item>
+        <item>100</item>
+        <item>100</item>
+        <item>100</item>
+        <item>100</item>
+        <item>100</item>
+        <item>100</item>
     </integer-array>
 
     <!-- Array of hysteresis constraint values for darkening, represented as tenths of a
@@ -296,27 +289,24 @@
          lux * (1.0f - CONSTRAINT_VALUE). When the current lux is lower than this threshold,
          the screen brightness is recalculated. See the config_ambientThresholdLevels
          description for how the constraint value is chosen. -->
-    <!-- Same reasoning downward: switching to dark theme removes the glow, a
-         20-40% drop at indoor lux, so require 50-60% below 700 lux; a real
-         lights-off is a >80% drop and still dims promptly. -->
     <integer-array name="config_ambientDarkeningThresholds">
         <item>600</item>
         <item>600</item>
-        <item>600</item>
-        <item>600</item>
-        <item>600</item>
-        <item>600</item>
         <item>550</item>
         <item>550</item>
-        <item>550</item>
-        <item>500</item>
-        <item>500</item>
         <item>500</item>
         <item>500</item>
         <item>450</item>
+        <item>450</item>
         <item>400</item>
-        <item>350</item>
+        <item>400</item>
+        <item>380</item>
+        <item>360</item>
+        <item>340</item>
+        <item>320</item>
         <item>300</item>
+        <item>300</item>
+        <item>280</item>
         <item>250</item>
     </integer-array>
 
