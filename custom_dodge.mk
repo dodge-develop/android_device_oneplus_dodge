@@ -19,6 +19,10 @@ PRODUCT_MANUFACTURER := OnePlus
 PRODUCT_BRAND := OnePlus
 PRODUCT_MODEL := CPH2653
 
+# Known-good bring-up: high_pwm feed + fusion consumer. Lux/bri work; CWB R/G/B
+# still 0 (client threadLoop neutered for boot safety).
+TARGET_FUSIONLIGHT_ENABLE := true
+
 PRODUCT_GMS_CLIENTID_BASE := android-oneplus
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
