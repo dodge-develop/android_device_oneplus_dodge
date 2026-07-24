@@ -120,10 +120,13 @@
     </screenBrightnessMap>
 
     <!-- Quick to brighten, lazy to darken, like stock OOS. These override the
-         config_autoBrightness*LightDebounce overlay values. -->
+         config_autoBrightness*LightDebounce overlay values. 4000 held the panel
+         visibly stuck at a level before it would even begin dimming; 2000 still
+         rides out momentary shadows (a hand passing, a dark video frame) but
+         starts the ramp while the change still feels tied to the room. -->
     <autoBrightness enabled="True">
         <brighteningLightDebounceMillis>1000</brighteningLightDebounceMillis>
-        <darkeningLightDebounceMillis>4000</darkeningLightDebounceMillis>
+        <darkeningLightDebounceMillis>2000</darkeningLightDebounceMillis>
     </autoBrightness>
 
     <!-- No highBrightnessMode block: the whole float range is the panel's normal
@@ -206,8 +209,17 @@
 
     <screenBrightnessRampFastDecrease>0.5</screenBrightnessRampFastDecrease>
     <screenBrightnessRampFastIncrease>0.5</screenBrightnessRampFastIncrease>
-    <screenBrightnessRampSlowDecrease>0.04</screenBrightnessRampSlowDecrease>
+    <!-- Downward rate was never tuned alongside the upward one: 0.04/s is ~25s
+         for a full-range dim, which reads as "stuck at max" rather than a slow
+         fade. 0.10/s (~10s full range) keeps dimming gentler than brightening
+         without stalling. -->
+    <screenBrightnessRampSlowDecrease>0.10</screenBrightnessRampSlowDecrease>
     <!-- Auto-brightness animates upward at the slow rate: 0.05 took ~14s for a
          dark-room to sunlight swing; 0.25 reaches it in ~3s, close to stock. -->
     <screenBrightnessRampSlowIncrease>0.25</screenBrightnessRampSlowIncrease>
+    <!-- Hard ceilings on ramp duration so a large swing can never crawl: with
+         only a rate set, the time to target scales with the size of the jump.
+         Order matters (xsd sequence): Increase before Decrease. -->
+    <screenBrightnessRampIncreaseMaxMillis>3000</screenBrightnessRampIncreaseMaxMillis>
+    <screenBrightnessRampDecreaseMaxMillis>4000</screenBrightnessRampDecreaseMaxMillis>
 </displayConfiguration>

@@ -261,18 +261,23 @@
     <!-- Fusion Next Gen is the light source now (content-immune). Drop the
          interim ~2x glow-mask hysteresis that made ABC ignore normal ambient
          changes after the first sample. Restore the stock-like curve: modest
-         deadband in near-dark, ~10-15% above ~60 lux. -->
+         deadband in near-dark, ~10-15% above ~60 lux.
+         The near-dark end was still carrying the glow-era deadband (2000 =
+         +200%, i.e. lux had to treble before ABC would lift off the minimum),
+         which read as "stuck at min". Fusion already subtracts the panel's own
+         glow, so that margin only has to cover sensor noise now: halve it to
+         +100% at the bottom and taper smoothly into the existing +10% tail. -->
     <integer-array name="config_ambientBrighteningThresholds">
-        <item>2000</item>
-        <item>1500</item>
-        <item>1200</item>
         <item>1000</item>
         <item>800</item>
+        <item>700</item>
         <item>600</item>
+        <item>500</item>
         <item>400</item>
         <item>300</item>
         <item>250</item>
         <item>200</item>
+        <item>180</item>
         <item>150</item>
         <item>120</item>
         <item>100</item>
