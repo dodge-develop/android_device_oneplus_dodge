@@ -94,6 +94,16 @@
     <!-- Light sensor event rate in milliseconds for automatic brightness control. -->
     <integer name="config_autoBrightnessLightSensorRate">200</integer>
 
+    <!-- How long (ms) a manual brightness set is remembered by the adaptive
+         short-term model. AOSP default is 300000 (5 min): drag the slider to
+         (say) minimum and auto-brightness biases the whole curve down at that
+         lux, so it stays "stuck" at min across screen off/on for the next five
+         minutes instead of ramping back to the sensor curve. 15000 (15s) makes
+         a manual nudge nearly transient — it holds just long enough to feel
+         intentional, then the sensor curve takes back over, matching the
+         snappier OnePlus/OOS feel. -->
+    <integer name="config_autoBrightnessShortTermModelTimeout">15000</integer>
+
     <!-- Screen brightness used to dim the screen when the user activity
          timeout expires.  May be less than the minimum allowed brightness setting
          that can be set by the user. -->
