@@ -1,0 +1,3 @@
+hal_client_domain(hal_power_default, hal_thermal)
+
+allow hal_power_default self:capability sys_nice;

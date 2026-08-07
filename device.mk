@@ -51,7 +51,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/nfc/libnfc-nci.conf:$(TARGET_COPY_OUT_VENDOR)/etc/libnfc-nci.conf
 
 # Power
-$(call soong_config_set,qtipower,mode_ext_lib,power-ext-oplus)
+$(call soong_config_set,power_libperfmgr,mode_extension_lib,//hardware/oplus:power-ext-oplus)
 
 # PowerShare
 PRODUCT_PACKAGES += \
