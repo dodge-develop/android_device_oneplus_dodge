@@ -1,5 +1,11 @@
+# ADPF must cross MCS categories on app processes (e.g. platform_app:s0:cXXX).
+# Without mlstrustedsubject, appdomain setsched allows still AVCs on labeled apps.
+typeattribute hal_power_default mlstrustedsubject;
+
+# Thermal client for load/headroom (neverallow-safe; do not raw-allow service find)
 hal_client_domain(hal_power_default, hal_thermal)
 
+# ADPF / PowerHintSession: adjust scheduling priority on critical threads
 allow hal_power_default self:capability sys_nice;
 allow hal_power_default appdomain:process { getsched setsched };
 allow hal_power_default surfaceflinger:process setsched;
