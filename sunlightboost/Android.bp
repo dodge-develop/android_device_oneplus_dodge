@@ -1,0 +1,20 @@
+// SPDX-License-Identifier: Apache-2.0
+//
+// Standalone automatic sunlight boost for OnePlus dodge (AA569 panel).
+// Hosts SunlightBoostController without the full OnePlus Settings app.
+
+android_app {
+    name: "SunlightBoost",
+
+    srcs: ["src/**/*.java"],
+    resource_dirs: ["res"],
+
+    certificate: "platform",
+    platform_apis: true,
+    privileged: true,
+    privapp_allowlist: "privapp-permissions-sunlightboost.xml",
+
+    optimize: {
+        enabled: false,
+    },
+}

@@ -1,0 +1,12 @@
+# SPDX-License-Identifier: Apache-2.0
+#
+# The app runs as android.uid.system, so chown the OPLUS HBM_MAX node to
+# system (DAC) so it can write it. SELinux still gates the actual access via
+# the sysfs_oplus_display type (see sepolicy/vendor/sysfs_oplus_display.te).
+on boot
+    chown system system /sys/kernel/oplus_display/hbm_max
+
+# Some display driver load orders are lazy; belt-and-braces retry after
+# sys.boot_completed is up.
+on property:sys.boot_completed=1
+    chown system system /sys/kernel/oplus_display/hbm_max

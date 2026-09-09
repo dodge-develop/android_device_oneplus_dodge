@@ -1,0 +1,12 @@
+# SPDX-License-Identifier: Apache-2.0
+#
+# Dedicated type for the OPLUS display HBM_MAX sysfs node
+# (/sys/kernel/oplus_display/hbm_max), so we can grant write to the
+# SunlightBoost priv-app without opening up the whole magic /sys/kernel tree.
+
+type sysfs_oplus_display, fs_type, sysfs_type;
+
+# SunlightBoost runs as android.uid.system (android:sharedUserId) in the
+# system_app domain, which is outside all_untrusted_apps so it may write the
+# node.
+allow system_app sysfs_oplus_display:file rw_file_perms;

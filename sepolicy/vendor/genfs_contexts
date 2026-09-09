@@ -1,0 +1,8 @@
+# SPDX-License-Identifier: Apache-2.0
+#
+# Give the HBM_MAX node its own type so SunlightBoost can be granted write to
+# exactly this file. The rest of /sys/kernel/oplus_display keeps the existing
+# vendor_sysfs_graphics label from hardware/oplus/sepolicy/qti/vendor/
+# genfs_contexts; genfscon resolves by longest matching path, so this
+# file-specific entry wins for hbm_max only.
+genfscon sysfs /kernel/oplus_display/hbm_max u:object_r:sysfs_oplus_display:s0
