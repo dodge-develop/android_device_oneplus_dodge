@@ -44,6 +44,13 @@ PRODUCT_PACKAGES += \
     OPlusSettingsResTarget \
     OPlusSystemUIResTarget
 
+# Sunlight boost (standalone; no device-settings app)
+PRODUCT_PACKAGES += \
+    SunlightBoost
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/sunlightboost/sunlightboost.rc:$(TARGET_COPY_OUT_SYSTEM)/etc/init/sunlightboost.rc
+
 # NFC
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/nfc/libnfc-mtp-SN220.conf_23821:$(TARGET_COPY_OUT_ODM)/etc/libnfc-mtp-SN220.conf_23821 \

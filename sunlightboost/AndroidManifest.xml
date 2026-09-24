@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.lineageos.device.sunlightboost"
+    android:versionCode="1"
+    android:versionName="1.0"
+    android:sharedUserId="android.uid.system">
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!-- HbmController parks auto-brightness and pins the refresh rate while HBM
+         is latched, so WRITE_SETTINGS is required; the sunlight_boost toggle
+         itself is only read. -->
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
+    <uses-feature android:name="android.hardware.sensor.light" android:required="false" />
+
+    <!-- persistent: the controller only reacts to a non-wakeup light sensor, and
+         a normal background app sits in the cached adj range (observed
+         oom_score_adj 935) where CachedAppOptimizer freezes it, so the sensor
+         callbacks never run. A persistent system process is never cached. -->
+    <!-- directBootAware + defaultToDeviceProtectedStorage, as in OSM's
+         device-settings manifest: a persistent app is started by AMS at
+         systemReady, before the user unlocks, and until then credential-encrypted
+         storage is unavailable. Without these the controller would read an empty
+         SharedPreferences (KEY_AUTO_ENGAGED and HbmController's auto-brightness /
+         refresh-rate backups) and could not persist them either. -->
+    <application
+        android:name=".SunlightBoostApp"
+        android:label="@string/app_name"
+        android:persistent="true"
+        android:defaultToDeviceProtectedStorage="true"
+        android:directBootAware="true"
+        android:allowBackup="true">
+
+        <receiver
+            android:name=".BootReceiver"
+            android:exported="true"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".SunlightBoostService"
+            android:exported="false" />
+    </application>
+</manifest>
