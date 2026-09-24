@@ -129,20 +129,69 @@
         <darkeningLightDebounceMillis>2000</darkeningLightDebounceMillis>
     </autoBrightness>
 
-    <!-- No highBrightnessMode block: the whole float range is the panel's normal
-         backlight range (max level 4094 = ~798 nits full-white, matching the stock
-         slider ceiling). The old block put everything above 0.85 on a 5min/30min
-         HBM budget, which dimmed the screen back down after a few minutes in the
-         sun. The panel's real >800-nit region (stock table rows 4096-4674, up to
-         1576 nits) is only reachable through the oplus HBM interface (hbm_max),
-         not the backlight path - the kernel clamps backlight at 4094. -->
+    <!-- Kept disabled: the enabled block's 5min/30min budget dimmed the panel in
+         the sun, and >800 nits is driven by hbm_max. Present only so the framework
+         still publishes an HDR/SDR ratio, which keeps the HDR brightness setting
+         and HDR detection alive. -->
+    <highBrightnessMode enabled="false">
+        <transitionPoint>0.85</transitionPoint>
+        <minimumLux>10000</minimumLux>
+        <timing>
+            <timeWindowSecs>1800</timeWindowSecs>
+            <timeMaxSecs>300</timeMaxSecs>
+            <timeMinSecs>60</timeMinSecs>
+        </timing>
+        <minimumHdrPercentOfScreen>0.2</minimumHdrPercentOfScreen>
+        <sdrHdrRatioMap>
+            <point>
+                <sdrNits>2.0</sdrNits>
+                <hdrRatio>6.0</hdrRatio>
+            </point>
+            <point>
+                <sdrNits>25.0</sdrNits>
+                <hdrRatio>5.0</hdrRatio>
+            </point>
+            <point>
+                <sdrNits>50.0</sdrNits>
+                <hdrRatio>4.0</hdrRatio>
+            </point>
+            <point>
+                <sdrNits>100.0</sdrNits>
+                <hdrRatio>3.0</hdrRatio>
+            </point>
+            <point>
+                <sdrNits>200.0</sdrNits>
+                <hdrRatio>2.4</hdrRatio>
+            </point>
+            <point>
+                <sdrNits>300.0</sdrNits>
+                <hdrRatio>2.0</hdrRatio>
+            </point>
+            <point>
+                <sdrNits>400.0</sdrNits>
+                <hdrRatio>1.7</hdrRatio>
+            </point>
+            <point>
+                <sdrNits>500.0</sdrNits>
+                <hdrRatio>1.5</hdrRatio>
+            </point>
+            <point>
+                <sdrNits>600.0</sdrNits>
+                <hdrRatio>1.3</hdrRatio>
+            </point>
+            <point>
+                <sdrNits>798.0</sdrNits>
+                <hdrRatio>1.0</hdrRatio>
+            </point>
+        </sdrHdrRatioMap>
+    </highBrightnessMode>
 
-    <!-- HDR boost without highBrightnessMode: HdrBrightnessModifier reads this
-         block directly and, with no HBM block, boosts up to BRIGHTNESS_MAX (the
-         798-nit backlight ceiling). SF dims SDR layers by the same ratio, so
-         SDR content stays at the user's level while HDR highlights get the
-         headroom. brightnessMap keys are ambient-lux upper bounds: the cap
-         applies below the key, so HDR can't blind in a dark room. -->
+    <!-- HDR boost: HdrBrightnessModifier reads this block directly and, with no
+         enabled HBM block, boosts up to BRIGHTNESS_MAX (the 798-nit backlight
+         ceiling). SF dims SDR layers by the same ratio, so SDR content stays at
+         the user's level while HDR highlights get the headroom. brightnessMap keys
+         are ambient-lux upper bounds: the cap applies below the key, so HDR can't
+         blind in a dark room. -->
     <hdrBrightnessConfig>
         <brightnessMap>
             <point>
