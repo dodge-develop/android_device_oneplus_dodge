@@ -1,0 +1,24 @@
+# SPDX-License-Identifier: Apache-2.0
+#
+# The app runs as android.uid.system, not root, so the oplus_display sysfs nodes
+# need DAC access opened up for it. Mirrors OSM's device-settings
+# init.device.settings.rc (android_device_oneplus_dodge, branch 16.2), which
+# does the same chown/chmod for hbm_max and pwm_onepulse. The nodes keep the
+# vendor_sysfs_graphics label, which init is allowed to setattr, so these
+# commands take effect (a dedicated label for hbm_max alone did not work).
+#
+# The display driver creates the oplus_display sysfs group from
+# oplus_display_private_api_init(), which can return -EPROBE_DEFER, so retry
+# once the framework is up. SELinux still gates the writes: only system_app has
+# rw on vendor_sysfs_graphics (sepolicy/vendor/system_app.te).
+on boot
+    chown system system /sys/kernel/oplus_display/hbm_max
+    chmod 0664 /sys/kernel/oplus_display/hbm_max
+    chown system system /sys/kernel/oplus_display/pwm_onepulse
+    chmod 0666 /sys/kernel/oplus_display/pwm_onepulse
+
+on property:sys.boot_completed=1
+    chown system system /sys/kernel/oplus_display/hbm_max
+    chmod 0664 /sys/kernel/oplus_display/hbm_max
+    chown system system /sys/kernel/oplus_display/pwm_onepulse
+    chmod 0666 /sys/kernel/oplus_display/pwm_onepulse

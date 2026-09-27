@@ -1,0 +1,15 @@
+# SPDX-License-Identifier: Apache-2.0
+#
+# The SunlightBoost app runs as android.uid.system, so it is in the system_app
+# domain. It drives the OnePlus HBM / sunlight boost through the oplus_display
+# sysfs nodes (hbm_max, and pwm_onepulse for the PWM interlock), so it needs
+# access to the whole vendor_sysfs_graphics subtree - both the directory (to
+# traverse it at all) and the files.
+#
+# Same rule as OSM's device-settings sepolicy/vendor/system_app.te
+# (android_device_oneplus_dodge, branch 16.2), under its "OnePulse PWM" heading.
+# A dedicated type for hbm_max alone was tried first and is worse: init cannot
+# chown/chmod it (the chown in sunlightboost.rc is refused with an avc setattr
+# denial), so the node stays root-owned and the app cannot write it, while the
+# sibling nodes covered by vendor_sysfs_graphics are chowned fine.
+rw_dir_file(system_app, vendor_sysfs_graphics);
