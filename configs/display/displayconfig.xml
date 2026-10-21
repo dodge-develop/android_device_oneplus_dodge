@@ -284,6 +284,24 @@
             <timeMaxSecs>300</timeMaxSecs>
             <timeMinSecs>60</timeMinSecs>
         </timing>
+        <!-- SDR nits -> HDR/SDR boost ratio, taken from osm1019's dodge config
+             (the 798-nit full-white ceiling of this panel, ratio tapering to
+             1.0 there). Read by HdrBrightnessModifier via
+             getFallbackSdrHdrRatioSpline() because this tree ships no
+             hdrBrightnessConfig block. Only affects HDR layer boosting; the
+             auto-brightness curve below is untouched. -->
+        <sdrHdrRatioMap>
+            <point><sdrNits>2.0</sdrNits><hdrRatio>6.0</hdrRatio></point>
+            <point><sdrNits>25.0</sdrNits><hdrRatio>5.0</hdrRatio></point>
+            <point><sdrNits>50.0</sdrNits><hdrRatio>4.0</hdrRatio></point>
+            <point><sdrNits>100.0</sdrNits><hdrRatio>3.0</hdrRatio></point>
+            <point><sdrNits>200.0</sdrNits><hdrRatio>2.4</hdrRatio></point>
+            <point><sdrNits>300.0</sdrNits><hdrRatio>2.0</hdrRatio></point>
+            <point><sdrNits>400.0</sdrNits><hdrRatio>1.7</hdrRatio></point>
+            <point><sdrNits>500.0</sdrNits><hdrRatio>1.5</hdrRatio></point>
+            <point><sdrNits>600.0</sdrNits><hdrRatio>1.3</hdrRatio></point>
+            <point><sdrNits>798.0</sdrNits><hdrRatio>1.0</hdrRatio></point>
+        </sdrHdrRatioMap>
     </highBrightnessMode>
     <autoBrightness enabled="true">
         <brighteningLightDebounceMillis>1500</brighteningLightDebounceMillis>
